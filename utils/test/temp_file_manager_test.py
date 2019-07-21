@@ -1,3 +1,4 @@
+"""Tests TempFileManager and TempDirManager class."""
 import os
 import shutil
 # import stat
