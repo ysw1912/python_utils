@@ -1,9 +1,10 @@
-import contextlib
+from contextlib import contextmanager
 import os
+import shutil
 import tempfile
 
 
-@contextlib.contextmanager
+@contextmanager
 def TempFileManager(delete, **kwargs):
   """Context manager that creates and deletes a named temporary file.
 
@@ -20,3 +21,19 @@ def TempFileManager(delete, **kwargs):
   finally:
     if delete:
       os.unlink(tmp_file.name)
+
+
+@contextmanager
+def TempDirManager(delete, **kwargs):
+  """Context manager that creates and deletes a named temporary directory.
+
+  Args:
+    delete: Whether to delete the directory out of the context.
+    kwargs: Arguments that shares the same meaning as mkdtemp.
+  """
+  name = tempfile.mkdtemp(**kwargs)
+  try:
+    yield name
+  finally:
+    if delete:
+      shutil.rmtree(name)
