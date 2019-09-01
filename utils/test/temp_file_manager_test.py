@@ -1,8 +1,8 @@
 """Tests TempFileManager and TempDirManager class."""
 import os
 import shutil
-# import stat
-# import subprocess
+import stat
+import subprocess
 
 import pytest
 
@@ -15,10 +15,10 @@ def test_temp_file_manager(delete):
     assert os.path.isfile(tmp_file)
 
     # Use the file as a shell script.
-    # with open(tmp_file, 'w') as fp:
-    #   fp.write('#!/bin/bash\becho hello')
-    # os.chmod(tmp_file, os.stat(tmp_file).st_mode | stat.S_IEXEC)
-    # subprocess.check_call([tmp_file])
+    with open(tmp_file, 'w') as fp:
+      fp.write('#!/bin/bash\becho hello')
+    os.chmod(tmp_file, os.stat(tmp_file).st_mode | stat.S_IEXEC)
+    subprocess.check_call(['bash', tmp_file])
 
   assert os.path.exists(tmp_file) == (not delete)
   if not delete:
